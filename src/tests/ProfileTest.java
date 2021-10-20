@@ -51,31 +51,6 @@ public class ProfileTest extends BasicTest {
 			authPage.userLogout();
 			String expectedLogoutMessage = "Logout Successfull!";
 			Assert.assertTrue(notificationSystemPage.getNotificationMessageText().contains(expectedLogoutMessage));
-			
-		
-		
-	
-		
-		//Assert.assertTrue(friendPage.isAddFriendButtonExist(), "Add Friend button doesn't exist.");
-		//friendPage.getAddFriendButton().click();
-		
-	//	Assert.assertTrue(friendPage.isMessageExist(), "Message doesn't exist.");
-		
-	//	String expectedAdd = "Your friend request has been sent!";
-	//	Assert.assertTrue(friendPage.getMessageText().contains(expectedAdd));
-		
-	//	Assert.assertTrue(friendPage.isCancelRequestButtonExist(), "Cancel Request button doesn't exist.");
-		
-	//	driver.navigate().refresh();
-		
-	//	Assert.assertTrue(friendPage.isCancelRequestButtonExist(), "Cancel Request button doesn't exist.");
-		
-	//	friendPage.getCancelRequestButton().click();
-	//	Assert.assertTrue(friendPage.isMessageExist(), "Message doesn't exist.");
-		
-	//	String expectedCancel = "Friend request deleted!";
-	//	Assert.assertTrue(friendPage.getMessageText().contains(expectedCancel));
-	//	Assert.assertTrue(friendPage.isAddFriendButtonExist(), "Add Friend button doesn't exist.");
 		
 }
 
