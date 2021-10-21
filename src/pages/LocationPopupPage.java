@@ -6,14 +6,16 @@ package pages;
 	import org.openqa.selenium.JavascriptExecutor;
 	import org.openqa.selenium.WebDriver;
 	import org.openqa.selenium.WebElement;
-	import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 	public class LocationPopupPage extends BasicPage {
 
-		private WebDriver driver;
-
-		public LocationPopupPage(WebDriver driver, WebDriverWait wait) {
-			super( driver, wait);
+		public LocationPopupPage(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, Actions actions) {
+			this.driver = driver;
+			this.wait = wait;
+			this.js = js;
+			this.actions = actions;
 		}
 
 	
@@ -25,7 +27,7 @@ package pages;
 		}
 		
 		public WebElement getCloseElement() {
-			return driver.findElement(By.xpath("//*[@class='close-btn-white']"));
+			return driver.findElement(By.xpath("//*[@class='close-btn close-btn-white']"));
 		}
 
 		public WebElement getKeyword() {
@@ -65,7 +67,11 @@ package pages;
 		
 		public void setLocation(String locationName) {
 			this.getKeyword().click();
-			this.getLocationItem("City Center - Albany").click();
+			String dataValue = getLocationItem(locationName).getAttribute("data-value");
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].value=arguments[1];", getLocationInput(), dataValue);
+
+			js.executeScript("arguments[0].click();", getSubmit());
 			
 			//Ovo ispod je prva verzija kao sam pokusao da resim 
 			//JavascriptExecutor js = (JavascriptExecutor) driver;	
@@ -74,67 +80,6 @@ package pages;
 			
 	}
 		}
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-//		public Select locationHeader() {
-			//	WebElement fs = this.driver.findElement(By.xpath("//*[@id=\"appointment\"]/div/div/form/div[1]/div/select"));
-				//Select select = new Select(fs);
-				//return select;
-			//}
-		
-		
-	//	public WebElement getRadioButton(String radioInputName) {
-	//		return this.driver.findElement(By.xpath("//*[@name='programs'][@value='" + radioInputName + "']"));
-	//	}
-		
-
-		//public WebElement getVisitDate() {
-		//	return this.driver.findElement(By.xpath("//*[@id=\"txt_visit_date\"]"));
-	//	}
-
-		//public WebElement getCommentInput() {
-		//	return this.driver.findElement(By.xpath("//*[@id=\"txt_comment\"]"));
-	//	}
-
-		//public WebElement getBookButton() {
-		//	return this.driver.findElement(By.xpath("//*[@id=\"btn-book-appointment\"]"));
-	//	}
-
-	//	public boolean isFormPresented() {
-	//		List<WebElement> form = driver.findElements(By.xpath("//*[@id=\"appointment\"]"));
-	//		return form.size() > 0;
-	//	}
-
-	//	public void makeAppointment(String facilityValue, boolean applyForHospitalReadmission, String programValue,
-		//		String visitDate, String comment) {
-			
-	//		this.getFacilitySelect().selectByValue(facilityValue);
-//
-	//		if (applyForHospitalReadmission) {
-		//		this.getApplyFor().click();
-			//}
-
-		//	this.getRadioButton(programValue).click();
-
-		//	this.getVisitDate().sendKeys(visitDate);
-
-	//		this.getCommentInput().sendKeys(comment);
-
-	//		this.getBookButton().click();
 	
 
 
