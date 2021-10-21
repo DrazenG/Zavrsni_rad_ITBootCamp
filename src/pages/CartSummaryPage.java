@@ -8,8 +8,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class CartSummaryPage extends BasicPage {
 	
 
-	public CartSummaryPage(WebDriver driver, WebDriverWait wait) {
-		super(driver, wait);
+	public CartSummaryPage(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, Actions actions) {
+		this.driver = driver;
+		this.wait = wait;
+		this.js = js;
+		this.actions = actions;
+		
 	}
 	//PROVERITI DIVOVE za ovaj element!!!!
 	public String getEmptyCartText() {
