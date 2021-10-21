@@ -10,8 +10,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 	public class LoginPage extends BasicPage {
 		
 		
-		public LoginPage(WebDriver driver, WebDriverWait wait) {
-			super(driver, wait);
+			public LoginPage(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, Actions actions) {
+			this.driver = driver;
+			this.wait = wait;
+			this.js = js;
+			this.actions = actions;
 		}
 		
 		// Elements -Elementi koji su na potrebni i koji se nalaze u okviru zahtevane funkcionalnosti
