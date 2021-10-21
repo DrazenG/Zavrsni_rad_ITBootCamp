@@ -28,7 +28,7 @@ public class NotificationSystemPage extends BasicPage {
 	
 	
 	public void waitUntilElementNotPresent() {
-		wait.until(ExpectedConditions.attributeContains(getNotification(), "hidden", "hidden"));
+		wait.until(ExpectedConditions.attributeContains(By.xpath("//*[contains(@class, 'system_message')]"), "style", "display: none;"));
 		System.out.println("Element vise nije prisutan.");
 	}
 	}
