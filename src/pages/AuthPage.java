@@ -4,11 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 public class AuthPage extends BasicPage {
 
-	public AuthPage(WebDriver driver, WebDriverWait wait) {
-		super(driver, wait);
+	public AuthPage(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, Actions actions) {
+		this.driver = driver;
+		this.wait = wait;
+		this.js = js;
+		this.actions = actions;
 	}
 	
 	public WebElement getDropDownMenu() {
