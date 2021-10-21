@@ -1,16 +1,22 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class MealPage extends BasicPage {
 	
 
-	public MealPage(WebDriver driver, WebDriverWait wait) {
-		super(driver, wait);
+	public MealPage(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, Actions actions) {
+		this.driver = driver;
+		this.wait = wait;
+		this.js = js;
+		this.actions = actions;
 	}
 
 	
@@ -31,10 +37,15 @@ public class MealPage extends BasicPage {
 		return this.driver.findElement(By.xpath("//*[@class='js-proceedtoAddInCart']"));
 
 	}
-	public void addToBasket(int number) {
+	
+	// Metod za dodavanje obroka u korpu 
+	
+	public void addToBasket(String mealQuantity) throws InterruptedException {
 		this.getChooseMeal().click();
 		this.getQuantity().clear();
-	    this.getQuantity();
+	    this.getQuantity().sendKeys(Keys.CONTROL, "a", Keys.DELETE);
+	    Thread.sleep(750);
+	    this.getQuantity().sendKeys(mealQuantity);
 		this.getAddToCartButton().click();
 	
 	}
