@@ -1,5 +1,10 @@
 package pages;
 
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -13,8 +18,11 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ProfilePage extends BasicPage {
 
-	public ProfilePage(WebDriver driver, WebDriverWait wait) {
-		super(driver, wait);
+	public ProfilePage(WebDriver driver, WebDriverWait wait, JavascriptExecutor js, Actions actions) {
+		this.driver = driver;
+		this.wait = wait;
+		this.js = js;
+		this.actions = actions;
 	}
 
 	// Elements -Elementi koji su na potrebni i koji se nalaze u okviru zahtevane
@@ -56,6 +64,10 @@ public class ProfilePage extends BasicPage {
 	public WebElement getProfilePicture() {
 		return this.driver.findElement(By.xpath("//*[@class='avatar']/img"));
 	}
+	
+	public WebElement getAvatarArea() {
+		return driver.findElement(By.className("avatar"));
+	}
 
 	public WebElement getUploadButton() {
 		return this.driver.findElement(By.xpath("//*[@title='Uplaod']"));
@@ -89,31 +101,49 @@ public class ProfilePage extends BasicPage {
 			
 		}
 		
-			// napraviti method get notification da ispravim gresku. promeniti naziv zbog cekanja slike
-		public WebElement getNotification() {
-			return driver.findElement(By.xpath("//*[contains(@class, 'alert--success')]"));
+		// Upload slike 
+		public void UploadPhoto() throws IOException, AWTException {
+			actions.moveToElement(getAvatarArea()).perform();
+			getProfilePicture().click();
+
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_ESCAPE);
+			robot.keyRelease(KeyEvent.VK_ESCAPE);
+
+			File image = new File("img/slika.jpg");
+			String photo = image.getAbsolutePath();
+			getUploadButton().sendKeys(photo);
+		}
+
+		// Removes photo from the user profile
+		public void removePhoto() throws AWTException {
+
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("arguments[0].click();", getDeleteButton());
+			Robot robot = new Robot();
+			robot.keyPress(KeyEvent.VK_ESCAPE);
+			robot.keyRelease(KeyEvent.VK_ESCAPE);
 		}
 		
-			public void waitUntilElementNotPresent() {
-				wait.until(ExpectedConditions.attributeContains(getNotification(), "hidden", "hidden"));
-				System.out.println("Element vise nije prisutan.");
+			// napraviti method get notification da ispravim gresku. promeniti naziv zbog cekanja slike
+	//	public WebElement getNotification() {
+		//	return driver.findElement(By.xpath("//*[contains(@class, 'alert--success')]"));
+	//	}
+		
+	//		public void waitUntilElementNotPresent() {
+	//			wait.until(ExpectedConditions.attributeContains(getNotification(), "hidden", "hidden"));
+	//			System.out.println("Element vise nije prisutan.");
+		// Gornji element je zamenjen ovim ispod
+		
+		public void waitUntilElementNotPresent() {
+			wait.until(ExpectedConditions.attributeContains(By.xpath("//*[contains(@class, 'system_message')]"), "style",
+					"display: none;"));
+			System.out.println("Element vise nije prisutan.");
 
 	}
 
 	// dobra strana za pomoc,jos googlati...
 	// https://www.selenium.dev/selenium/docs/api/java/org/openqa/selenium/interactions/Actions.html
-	public void clickOnUploadProfilePicture() {
-		actions.moveToElement(driver.findElement(By.xpath("//*[@class='avatar']"))).perform();
-		getUploadButton().click();
-	}
-
-	public void uploadProfilePicture(String path) {
-		getProfilePictureInput().sendKeys(path);
-	}
-	
-	public void deleteProfilePicture() {
-		getDeleteButton().click();
-	}
 	
 	public void saveProfileChanges() {
 		getSaveButton().click();
@@ -121,7 +151,7 @@ public class ProfilePage extends BasicPage {
 		
 		public void changeAllBasicUserInputs(
 				String firstName, String lastName, String address, int phoneNumber,
-				int zipCode, String Country, String State, String City) {
+				int zipCode, String Country, String State, String City)throws InterruptedException {
 		this.getFirstName().clear();
 		this.getFirstName();
 		this.getLastName().clear();
@@ -132,17 +162,15 @@ public class ProfilePage extends BasicPage {
 		this.getPhoneNumber();
 		this.getZipCode().clear();
 		this.getZipCode();
-		this.getCity();
-		this.getCountry();
-		this.getState();
-		this.getSaveButton();
+		Thread.sleep(500);
+		this.getCountry().selectByVisibleText(Country);
+		Thread.sleep(500);
+		this.getState().selectByVisibleText(State);
+		Thread.sleep(500);
+		this.getCity().selectByVisibleText(City);
+		getSaveButton().click();
 		
 		
 		}
 		
 	}
-
-
-
-// metoda za brisanje slike i da se nad njim izvrsi javascript
-// metoda za menjanje svih parametara korisnika
