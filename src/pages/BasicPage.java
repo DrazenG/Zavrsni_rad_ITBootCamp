@@ -8,11 +8,7 @@ public abstract class BasicPage {
 	protected WebDriver driver;
 	protected WebDriverWait wait;
 	protected Actions actions;
-	
-	public BasicPage(WebDriver driver, WebDriverWait wait) {
-		this.driver = driver;
-		this.wait = wait;
-	}
+
 
 }
 
